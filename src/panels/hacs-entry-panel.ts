@@ -27,7 +27,7 @@ import { HacsStyles } from "../styles/hacs-common-style";
 import { getMessages } from "../tools/get-messages";
 import { localize } from "../localize/localize";
 import { navigate } from "../tools/navigate";
-import { sections } from "./hacs-sections";
+import { sections, sections2 } from "./hacs-sections";
 //import "../components/hacs-link";
 
 @customElement("hacs-entry-panel")
@@ -131,22 +131,29 @@ export class HacsEntryPanel extends LitElement {
               )}
             </ha-card>`
           : ""}
+        ${sections2.map(
+          (section) =>
+            html`<ha-card
+              >${section.tabs
+                .filter((tab) => true || this.configuration.categories.includes(tab.id))
+                .map(
+                  (tab) =>
+                    html`
+                      <paper-icon-item @click=${() => this._changeLocation(tab.id)}>
+                        <ha-icon .icon=${tab.icon} slot="item-icon"></ha-icon>
+                        <paper-item-body two-line>
+                          ${tab.id}
+                          <div secondary>
+                            ${tab.id}
+                          </div>
+                        </paper-item-body>
+                        <ha-icon-button icon="mdi:chevron-right"></ha-icon-button>
+                      </paper-icon-item>
+                    `
+                )}</ha-card
+            >`
+        )}
         <ha-card>
-          ${enabledSections.map(
-            (panel) =>
-              html`
-                <paper-icon-item @click=${() => this._changeLocation(panel.id)}>
-                  <ha-icon .icon=${panel.icon} slot="item-icon"></ha-icon>
-                  <paper-item-body two-line>
-                    ${localize(`sections.${panel.id}.title`)}
-                    <div secondary>
-                      ${localize(`sections.${panel.id}.description`)}
-                    </div>
-                  </paper-item-body>
-                  <ha-icon-button icon="mdi:chevron-right"></ha-icon-button>
-                </paper-icon-item>
-              `
-          )}
           <paper-icon-item @click=${this._openAboutDialog}>
             <ha-icon icon="mdi:information" slot="item-icon"></ha-icon>
             <paper-item-body two-line>

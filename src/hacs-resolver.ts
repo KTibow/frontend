@@ -113,7 +113,7 @@ export class HacsResolver extends LitElement {
       this.route.path = "/dashboard";
     }
 
-    return html`${["/integrations", "/frontend", "/automation"].includes(this.route.path)
+    return html`${this.configuration.categories.includes(this.route.path.split("/")[1])
         ? html`<hacs-store-panel
             .hass=${this.hass}
             .route=${this.route}

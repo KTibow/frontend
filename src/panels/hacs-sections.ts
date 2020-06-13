@@ -20,6 +20,57 @@ export const sections = {
   ],
 };
 
+export const sections2 = [
+  {
+    section: "core",
+    tabs: [
+      {
+        icon: "mdi:puzzle",
+        id: "integration",
+      },
+      {
+        icon: "mdi:puzzle",
+        id: "packages",
+      },
+    ],
+  },
+  {
+    section: "frontend",
+    tabs: [
+      {
+        icon: "mdi:palette",
+        id: "plugin",
+      },
+      {
+        icon: "mdi:palette",
+        id: "themes",
+      },
+      {
+        icon: "mdi:palette",
+        id: "modules",
+      },
+    ],
+  },
+  {
+    section: "automation",
+    tabs: [
+      {
+        icon: "mdi:robot",
+        id: "python_script",
+      },
+      {
+        icon: "mdi:robot",
+        id: "appdaemon",
+      },
+      {
+        icon: "mdi:robot",
+        id: "netdaemon",
+      },
+    ],
+  },
+];
+
 export const activePanel = (route: Route) => {
-  return sections.panels.find((panel) => panel.id === route.path.replace("/", ""));
+  const active = route.path.replace("/", "");
+  return sections2.find((section) => section.tabs.find((tab) => tab.id === active));
 };

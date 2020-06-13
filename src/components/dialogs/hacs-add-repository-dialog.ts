@@ -67,7 +67,7 @@ export class HacsAddRepositoryDialog extends HacsDialogBase {
     if (!this.active) return html``;
 
     if (this.filters.length === 0) {
-      const categories = activePanel(this.route)?.categories;
+      const categories = activePanel(this.route)?.tabs.map((tab) => tab.id);
       categories
         ?.filter((c) => this.configuration.categories.includes(c))
         .forEach((category) => {

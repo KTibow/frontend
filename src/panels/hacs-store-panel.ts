@@ -40,18 +40,11 @@ export class HacsStorePanel extends LitElement {
   private _repositoriesInActiveSection = memoizeOne(
     (repositories: Repository[], sections: any, section: string) => {
       const installedRepositories: Repository[] = repositories?.filter(
-        (repo) =>
-          sections.panels
-            .find((panel) => panel.id === section)
-            .categories?.includes(repo.category) && repo.installed
+        (repo) => sections.panels.find((panel) => panel.id === section) && repo.installed
       );
       const newRepositories: Repository[] = repositories?.filter(
         (repo) =>
-          sections.panels
-            .find((panel) => panel.id === section)
-            .categories?.includes(repo.category) &&
-          repo.new &&
-          !repo.installed
+          sections.panels.find((panel) => panel.id === section) && repo.new && !repo.installed
       );
       return [installedRepositories || [], newRepositories || []];
     }
@@ -104,7 +97,7 @@ export class HacsStorePanel extends LitElement {
     )[1];
 
     if (!this.filters[this.section]) {
-      const categories = activePanel(this.route)?.categories;
+      const categories = activePanel(this.route)?.tabs.map((tab) => tab.id);
       this.filters[this.section] = [];
       categories
         ?.filter((c) => this.configuration.categories.includes(c))
@@ -121,7 +114,7 @@ export class HacsStorePanel extends LitElement {
 
     return html`<hacs-tabbed-layout
       .hass=${this.hass}
-      .tabs=${tabs}
+      .tabs=${activePanel(this.route)?.tabs}
       .route=${this.route}
       .narrow=${this.narrow}
       .selected=${this.section}
